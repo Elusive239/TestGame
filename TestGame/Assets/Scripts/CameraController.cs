@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CameraController : MonoBehavior{
+public class CameraController : MonoBehaviour{
     public Transfrom self;
     public float speed;
     private Vector2 dimensions;
