@@ -5,13 +5,13 @@ public class CameraController : MonoBehaviour{
     public float speed, padding;
     public Vector2 boundsMin, boundsMax;
     private Transform self;
-    private Vector2 centerOfScreen;
+    private Vector3 centerOfScreen;
     private Vector3 posToMoveTo;
     private bool canMove = false;
 
     public void Awake(){
         self = this.transform;
-        centerOfScreen = new Vector2((float)Screen.width / 2.0f, (float)Screen.height / 2.0f);
+        centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
         Vector3 upperBounds = Camera.main.ScreenToWorldPoint(new Vector3((float)Screen.width,  (float)Screen.height));
         Vector3 lowerBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0));
         boundsMin = new Vector2(
@@ -26,10 +26,12 @@ public class CameraController : MonoBehaviour{
 
     public void Update(){
         if(canMove){
-            posToMoveTo = Vector3.MoveTowards(self.position, posToMoveTo, speed*Time.deltaTime); 
+            centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
+            posToMoveTo = Vector3.MoveTowards(centerOfScreen, posToMoveTo, speed*Time.deltaTime); 
             
-            if(Vector3.Distance(self.position, posToMoveTo) < 0.01f){
+            if(Vector3.Distance(centerOfScreen, posToMoveTo) < 0.01f){
                 canMove = false;
+                centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
                 self.position = posToMoveTo;
                 return;
             }
@@ -37,7 +39,7 @@ public class CameraController : MonoBehaviour{
             posToMoveTo = new Vector3 (
                 Mathf.Clamp(posToMoveTo.x, boundsMin.x, boundsMax.x), 
                 Mathf.Clamp(posToMoveTo.y, boundsMin.y, boundsMax.y),                    
-                self.position.z 
+                centerOfScreen.z 
             );
             self.position = posToMoveTo;
         }
