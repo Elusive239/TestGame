@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour{
 
     public void Awake(){
         self = this.transform;
-        centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
+        centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, -10);
         Vector3 upperBounds = Camera.main.ScreenToWorldPoint(new Vector3((float)Screen.width,  (float)Screen.height));
         Vector3 lowerBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0));
         boundsMin = new Vector2(
@@ -26,13 +26,12 @@ public class CameraController : MonoBehaviour{
 
     public void Update(){
         if(canMove){
-            centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
+            centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, -10);
             Vector3 center = Camera.main.ScreenToWorldPoint(centerOfScreen);
             posToMoveTo = Vector3.MoveTowards(center, posToMoveTo, speed*Time.deltaTime); 
             
             if(Vector3.Distance(center, posToMoveTo) < 0.01f){
                 canMove = false;
-                centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
                 self.position = posToMoveTo;
                 return;
             }
