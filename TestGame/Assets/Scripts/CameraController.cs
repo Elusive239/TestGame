@@ -6,6 +6,8 @@ public class CameraController : MonoBehaviour{
     public Vector2 boundsMin, boundsMax;
     private Transform self;
     private Vector2 centerOfScreen;
+    private Vector3 posToMoveTo;
+    private bool canMove = false;
 
     public void Awake(){
         self = this.transform;
@@ -14,18 +16,36 @@ public class CameraController : MonoBehaviour{
         Vector3 lowerBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0));
         boundsMin = new Vector2(
             lowerBounds.x - padding,
-            lowerBounds.y - padding
+            lowerBounds.y - padding/2
         );
         boundsMax = new Vector2(
             upperBounds.x + padding,
-            upperBounds.y + padding
+            upperBounds.y + padding/2
         );
     }
 
     public void Update(){
+        if(canMove){
+            posToMoveTo = Vector3.MoveTowards(self.position, posToMoveTo, speed*Time.deltaTime); 
+            
+            if(Vector3.Distance(self.position, posToMoveTo) < 0.01f){
+                canMove = false;
+                self.position = posToMoveTo;
+                return;
+            }
+
+            posToMoveTo = new Vector3 (
+                Mathf.Clamp(posToMoveTo.x, boundsMin.x, boundsMax.x), 
+                Mathf.Clamp(posToMoveTo.y, boundsMin.y, boundsMax.y),                    
+                self.position.z 
+            );
+            self.position = posToMoveTo;
+        }
+
         // Handle screen touches.
-        if (Input.touchCount > 0)
-        {
+        if (Input.touchCount < 1)
+            return;
+    
             Touch touch = Input.GetTouch(0);
             if (Input.touchCount >= 2){
                 Touch touch2 = Input.GetTouch(1);
@@ -41,18 +61,14 @@ public class CameraController : MonoBehaviour{
                 }
                 return;
             }
+
             // Move if the screen has the finger moving.
-            if (touch.phase == TouchPhase.Moved)
+            if (touch.phase == TouchPhase.Began )//|| touch.phase == TouchPhase.Stationary)
             {
-                Vector2 pos = touch.position;
-                pos = Vector2.MoveTowards(self.position, pos, speed*Time.deltaTime);
-                                
-                pos = new Vector2 (
-                    Mathf.Clamp(pos.x, boundsMin.x, boundsMax.x), 
-                    Mathf.Clamp(pos.y, boundsMin.y, boundsMax.y) 
-                );
-                self.position = pos;
+                canMove = true;
+                posToMoveTo = Camera.main.ScreenToWorldPoint(touch.position);
+                return;
             }
-        }
+            else if (touch.phase == TouchPhase.Ended) canMove = false;
     }
 }
