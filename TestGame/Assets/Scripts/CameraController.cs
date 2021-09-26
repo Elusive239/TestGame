@@ -27,9 +27,10 @@ public class CameraController : MonoBehaviour{
     public void Update(){
         if(canMove){
             centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
-            posToMoveTo = Vector3.MoveTowards(centerOfScreen, posToMoveTo, speed*Time.deltaTime); 
+            Vector3 center = Camera.main.ScreenToWorldPoint(centerOfScreen);
+            posToMoveTo = Vector3.MoveTowards(center, posToMoveTo, speed*Time.deltaTime); 
             
-            if(Vector3.Distance(centerOfScreen, posToMoveTo) < 0.01f){
+            if(Vector3.Distance(center, posToMoveTo) < 0.01f){
                 canMove = false;
                 centerOfScreen = new Vector3((float)Screen.width / 2.0f, (float)Screen.height / 2.0f, self.position.z);
                 self.position = posToMoveTo;
@@ -39,7 +40,7 @@ public class CameraController : MonoBehaviour{
             posToMoveTo = new Vector3 (
                 Mathf.Clamp(posToMoveTo.x, boundsMin.x, boundsMax.x), 
                 Mathf.Clamp(posToMoveTo.y, boundsMin.y, boundsMax.y),                    
-                centerOfScreen.z 
+                center.z 
             );
             self.position = posToMoveTo;
         }
