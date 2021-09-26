@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour{
     private Vector2 dimensions;
 
     public void Awake(){
-        self = this.gameObject.transfrom;
+        self = this.transform;
         dimensions = new Vector2((float)Screen.width / 2.0f, (float)Screen.height / 2.0f);
     }
 
