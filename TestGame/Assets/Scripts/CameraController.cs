@@ -20,12 +20,11 @@ public class CameraController : MonoBehaviour{
             if (touch.phase == TouchPhase.Moved)
             {
                 Vector2 pos = touch.position;
-                pos.x = (pos.x - dimensions.x) / dimensions.x;
-                pos.y = (pos.y - dimensions.y) / dimensions.y;
+                pos = Vector2.MoveTowards(self.position, pos, speed*Time.deltaTime);
             }
 
             if (Input.touchCount >= 2){
-                touch = Input.GetTouch(1);
+                Touch touch2 = Input.GetTouch(1);
 
                 if (touch.phase == TouchPhase.Began)
                 {
