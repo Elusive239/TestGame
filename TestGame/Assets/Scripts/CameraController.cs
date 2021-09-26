@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour{
-    public Transform self;
     public float speed;
+    private Transform self;
     private Vector2 dimensions;
 
     public void Awake(){
-        self = this.transfrom;
+        self = this.gameObject.transfrom;
         dimensions = new Vector2((float)Screen.width / 2.0f, (float)Screen.height / 2.0f);
     }
 
