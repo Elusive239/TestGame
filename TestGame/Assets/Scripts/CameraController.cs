@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour{
     public float speed, padding;
     public Vector2 boundsMin, boundsMax;
     private Transform self;
-    private bool moving = false;
+    public bool moving = false;
     private Vector3 target;
 
     public void Awake(){
