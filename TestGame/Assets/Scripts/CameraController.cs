@@ -37,8 +37,9 @@ public class CameraController : MonoBehaviour{
             //     Mathf.Clamp(target.y, boundsMin.y, boundsMax.y),                    
             //     -10f
             // );
-
-            if(Vector3.Distance(center, target) >0.2){
+            float dist = Vector3.Distance(center, target);
+            Debug.Log("Distance from center: " + dist);
+            if( dist>0.2){
                 Vector3 result = Vector3.MoveTowards(center, target, speed * Time.deltaTime);
                 self.position = new Vector3 (
                 Mathf.Clamp(result.x, boundsMin.x, boundsMax.x), 
