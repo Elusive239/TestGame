@@ -38,13 +38,12 @@ public class CameraController : MonoBehaviour{
             //     -10f
             // );
 
-            if(Vector3.Distance(center, target) >0.1){
+            if(Vector3.Distance(center, target) >0.2){
                 Vector3 result = Vector3.MoveTowards(center, target, speed * Time.deltaTime);
                 self.position = new Vector3 (
                 Mathf.Clamp(result.x, boundsMin.x, boundsMax.x), 
                 Mathf.Clamp(result.y, boundsMin.y, boundsMax.y),                    
-                -10f
-            );
+                -10f);
             }else{
                 self.position = target;
                 moving = false;
