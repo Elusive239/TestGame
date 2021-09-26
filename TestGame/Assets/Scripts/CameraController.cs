@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour{
             posToMoveTo = new Vector3 (
                 Mathf.Clamp(posToMoveTo.x, boundsMin.x, boundsMax.x), 
                 Mathf.Clamp(posToMoveTo.y, boundsMin.y, boundsMax.y),                    
-                center.z 
+                -10f
             );
             self.position = posToMoveTo;
         }
