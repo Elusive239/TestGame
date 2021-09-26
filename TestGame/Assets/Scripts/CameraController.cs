@@ -26,10 +26,10 @@ public class CameraController : MonoBehaviour{
 
     public void Update(){
         if(moving){
-            if (Input.touchCount < 1){
-                moving = false;
-                return;
-            }
+            // if (Input.touchCount < 1){
+            //     moving = false;
+            //     return;
+            // }
 
             
             // target = new Vector3 (
