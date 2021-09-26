@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 public class CameraController : MonoBehavior{
     public Transfrom self;
     public float speed;
