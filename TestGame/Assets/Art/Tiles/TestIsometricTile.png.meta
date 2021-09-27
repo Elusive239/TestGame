@@ -11,6 +11,27 @@ TextureImporter:
   - first:
       213: -2007255163651425536
     second: TestIsometricTile_2
+  - first:
+      213: -3391986942723159764
+    second: TestIsometricTile_3
+  - first:
+      213: -6280207590356488268
+    second: TestIsometricTile_4
+  - first:
+      213: -352993906824002154
+    second: TestIsometricTile_5
+  - first:
+      213: -7220604093392255741
+    second: TestIsometricTile_6
+  - first:
+      213: -4518498662999245568
+    second: TestIsometricTile_7
+  - first:
+      213: 1814340293700050458
+    second: TestIsometricTile_8
+  - first:
+      213: 4104533451134450182
+    second: TestIsometricTile_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -140,7 +161,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -160,8 +181,8 @@ TextureImporter:
       name: TestIsometricTile_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 32
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -181,8 +202,8 @@ TextureImporter:
       name: TestIsometricTile_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -194,6 +215,153 @@ TextureImporter:
       bones: []
       spriteID: 00bfcf4401cc424e0800000000000000
       internalID: -2007255163651425536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c29093cd8dd3de0d0800000000000000
+      internalID: -3391986942723159764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bfe615787838d8a0800000000000000
+      internalID: -6280207590356488268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 695c0e779e9e91bf0800000000000000
+      internalID: -352993906824002154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3058f9d55d24bcb90800000000000000
+      internalID: -7220604093392255741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00d3ad1f7611b41c0800000000000000
+      internalID: -4518498662999245568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1e5ba362e4dd2910800000000000000
+      internalID: 1814340293700050458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TestIsometricTile_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60ab3935d6b36f830800000000000000
+      internalID: 4104533451134450182
       vertices: []
       indices: 
       edges: []
