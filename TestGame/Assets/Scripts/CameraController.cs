@@ -26,20 +26,14 @@ public class CameraController : MonoBehaviour{
 
     public void Update(){
         if(moving){
-            // if (Input.touchCount < 1){
-            //     moving = false;
-            //     return;
-            // }
+            if(Input.touchCount == 1){
+                Touch t = Input.GetTouch(0);
+                if(t.phase == TouchPhase.Began)
+                target = Camera.main.ScreenToWorldPoint(t.position);
+            }
 
-            
-            // target = new Vector3 (
-            //     Mathf.Clamp(target.x, boundsMin.x, boundsMax.x), 
-            //     Mathf.Clamp(target.y, boundsMin.y, boundsMax.y),                    
-            //     -10f
-            // );
             float dist = Vector3.Distance(center, target);
             Debug.Log("Distance from center: " + dist);
-            if( dist>10.01f){
                 Vector3 result = Vector3.MoveTowards(center, target, speed * Time.deltaTime);
                 self.position = new Vector3 (
                 Mathf.Clamp(result.x, boundsMin.x, boundsMax.x), 
@@ -50,11 +44,7 @@ public class CameraController : MonoBehaviour{
                     moving = false;
                     return;
                 }
-            }else{
-                self.position = target;
-                moving = false;
-                return;
-            }
+        
             return;
         }
 
