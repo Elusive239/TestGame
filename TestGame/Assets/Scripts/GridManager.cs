@@ -94,8 +94,8 @@ public class GridManager : MonoBehaviour
                 board[x-1,y-1].startTileColor = true;
             }
         }
-        yield return new WaitForSeconds(1.2f);
-        playerChars[0].transform.position = board[0,0].charPosition;
+        // yield return new WaitForSeconds(1.2f);
+        // playerChars[0].transform.position = board[0,0].charPosition;
     }
     
     void Awake(){

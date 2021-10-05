@@ -23,24 +23,25 @@ public class GridTile : MonoBehaviour
         target = _target;
     }
 
+    #region Animation
     public void MoveDown(float rand){
         startMove = Time.time + rand;
         start = true;
     }
 
-    public void IncBorderColor(Color c){
-        Color col = Color.Lerp(border.color, c,11f * Time.deltaTime);
+    void IncBorderColor(Color c){
+        Color col = Color.Lerp(border.color, c,9f * Time.deltaTime);
         border.color = col;
     }
 
-    public void IncTileColor(Color a, Color b){
-        Color col1 = Color.Lerp(top.color, a,11f * Time.deltaTime);
+    void IncTileColor(Color a, Color b){
+        Color col1 = Color.Lerp(top.color, a,18f * Time.deltaTime);
         top.color = col1;
-        Color col2 = Color.Lerp(bottom.color, b,11f * Time.deltaTime);
+        Color col2 = Color.Lerp(bottom.color, b,18f * Time.deltaTime);
         bottom.color = col2;
     }
 
-    public bool SameBorderColor(Color toCompare){
+    bool SameBorderColor(Color toCompare){
         bool toReturn = border.color == toCompare;
         //print(toReturn);
         return toReturn;
@@ -72,6 +73,8 @@ public class GridTile : MonoBehaviour
                 IncBorderColor(GridManager.manager.border);
             }else{
                 startHighlightColor = false;
+                Color temp = new Color(border.color.r, border.color.g, border.color.b, 0);
+                border.color = temp;
             }
         }
 
@@ -84,4 +87,5 @@ public class GridTile : MonoBehaviour
             start = false;
         }
     }
+    #endregion
 }
