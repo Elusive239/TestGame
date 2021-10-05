@@ -32,6 +32,20 @@ public class TurnQueue<T> where T : IComparable<T> {
         }
     }
 
+        /// <summary>
+    /// Creates a TurnQueue from an array of objects, using its count as the Queues size.
+    /// </summary>
+    /// <param name="items"></param>
+    public TurnQueue(T[] items){
+        int count = items.Size;
+        items = new T[count];
+        int i = 0;
+        foreach (var item in items){
+            items[0] = item;
+            i++;
+        }
+    }
+
     /// <summary>
     /// Creates a TurnQueue object with the default size, 10
     /// </summary>
@@ -198,10 +212,32 @@ public class TurnQueue<T> where T : IComparable<T> {
     /// </summary>
     /// <returns></returns>
     public List<T> ToList(){
-        List<T> list = new List<T>();
+        List<T> list = new List<T>(Size);
         foreach (var item in items){   
             list.Add(item);
         }
         return list;
+    }
+
+    /// <summary>
+    /// Converts the TurnQueue into an array.
+    /// </summary>
+    /// <returns></returns>
+    public T[] ToArray(){
+        //Have to do it like this or it manipulate the original array.
+        T[] list = T[Size];
+        foreach (var item in items){   
+            list.Add(item);
+        }
+        return list;
+    } 
+
+    /// <summary>
+    /// Indexer. lets you access this like it was a normal array.
+    /// </summary>
+    /// <value></value>
+    public T this[int index]{
+        get => items[index];
+        set => items[index] = value;
     }
 }
