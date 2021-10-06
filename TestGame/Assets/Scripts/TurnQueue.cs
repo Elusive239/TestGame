@@ -23,11 +23,11 @@ public class TurnQueue<T> where T : IComparable<T> {
     /// </summary>
     /// <param name="items"></param>
     public TurnQueue(List<T> items){
-        int count = items.Size;
-        items = new T[count];
+        int count = items.Count;
+        this.items = new T[count];
         int i = 0;
         foreach (var item in items){
-            items[0] = item;
+            this.items[0] = item;
             i++;
         }
     }
@@ -37,11 +37,11 @@ public class TurnQueue<T> where T : IComparable<T> {
     /// </summary>
     /// <param name="items"></param>
     public TurnQueue(T[] items){
-        int count = items.Size;
-        items = new T[count];
+        int count = items.Length;
+        this.items = new T[count];
         int i = 0;
         foreach (var item in items){
-            items[0] = item;
+            this.items[0] = item;
             i++;
         }
     }
@@ -117,14 +117,14 @@ public class TurnQueue<T> where T : IComparable<T> {
         int index = GetIndex (item);
         int newIndex = index + amount;
         if (newIndex > items.Length) return;
-
+        
         for (int i = index; i < count; i++) {
             if (i == newIndex) {
-                newItems[i] = item;
+                items[i] = item;
                 break;
             }
 
-            newItems[i] = items[i + 1];
+            items[i] = items[i + 1];
         }
     }
 
@@ -140,10 +140,10 @@ public class TurnQueue<T> where T : IComparable<T> {
 
         for (int i = index; i > 0; i--) {
             if (i == newIndex) {
-                newItems[i] = item;
+                items[i] = item;
                 break;
             }
-            newItems[i] = items[i - 1];
+            items[i] = items[i - 1];
         }
     }
 
@@ -156,7 +156,7 @@ public class TurnQueue<T> where T : IComparable<T> {
     public int GetIndex (T item) {
         int index = -1;
         for (int i = 0; i < count; i++) {
-            if (items[i] == item) {
+            if (items[i].Equals(item)) {
                 index = i;
                 break;
             }
@@ -165,14 +165,14 @@ public class TurnQueue<T> where T : IComparable<T> {
     }
 
     /// <summary>
-    /// Creates a larger queue with anewly provided size.
+    /// Creates a larger queue with a newly provided size.
     /// Just in case you actually for some reason need a larger queue. 
     /// Meant to reduce cpu/memory usage.
     /// </summary>
     /// <param name="newSize"></param>
     /// <returns></returns>
     public TurnQueue<T> largerQueue (int newSize) {
-        if (Size < newSize) return;
+        if (Size < newSize) return null;
         TurnQueue<T> newQueue = new TurnQueue<T> (newSize);
         foreach (T item in items) {
             newQueue.Push (item);
@@ -186,11 +186,11 @@ public class TurnQueue<T> where T : IComparable<T> {
     public void Sort () {
         T temp;
         for (int i = 0; i < items.Length; i++) {
-            for (int y = 0; y < item.Length; y++) {
+            for (int y = 0; y < items.Length; y++) {
                 if (items[i].CompareTo (items[y]) == 1) {
                     temp = items[i];
-                    items[i] = items[j];
-                    items[j] = temp;
+                    items[i] = items[y];
+                    items[y] = temp;
                 }
             }
         }
@@ -225,11 +225,13 @@ public class TurnQueue<T> where T : IComparable<T> {
     /// <returns></returns>
     public T[] ToArray(){
         //Have to do it like this or it manipulate the original array.
-        T[] list = T[Size];
+        T[] arr = new T[Size];
+        int i = 0;
         foreach (var item in items){   
-            list.Add(item);
+            arr[i] = item;
+            i++;
         }
-        return list;
+        return arr;
     } 
 
     /// <summary>

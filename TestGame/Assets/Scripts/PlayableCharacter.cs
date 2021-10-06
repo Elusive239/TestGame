@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ public enum Faction{
     player, ai
 }
 
-public class PlayableCharacter : MonoBehaviour{
+public class PlayableCharacter : MonoBehaviour, IComparable<PlayableCharacter>{
     public Faction faction;
     Vector2 target;
     bool moving = false;
@@ -14,6 +15,7 @@ public class PlayableCharacter : MonoBehaviour{
     const float speed = 6f;
     Vector3[] currentPath;
     int pathIndex = 0;
+    public Color uiColor;
     
     void Awake()
     {
@@ -55,5 +57,9 @@ public class PlayableCharacter : MonoBehaviour{
                 pathIndex++;
             }
         }
+    }
+
+    public int CompareTo(PlayableCharacter other){
+        return faction == Faction.player && other.faction != Faction.player ? 1 : -1 ;
     }
 }

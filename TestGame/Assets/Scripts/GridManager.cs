@@ -27,8 +27,6 @@ public class GridManager : MonoBehaviour
     void InitGrid(){
         Transform tileTrans = prefab.GetComponent<Transform>();
         tileScale = new Vector2(tileTrans.localScale.x, tileTrans.localScale.y);
-        if(manager == null)
-            manager = this;
         playerChars = new List<PlayableCharacter>();
         enemChars = new List<PlayableCharacter>();
         if(board == null){
@@ -99,11 +97,14 @@ public class GridManager : MonoBehaviour
     }
     
     void Awake(){
+        if(manager == null)
+            manager = this;
         InitGrid();
         CameraController.canMove = true;
     }
 
     //NOT DONE
+    //Gonna need to do somethin like A*
     public Vector3[] GetPath(Vector3 start, Vector3 target){
         Vector3[] path = new Vector3[] {
             start, GetTile(target).charPosition
