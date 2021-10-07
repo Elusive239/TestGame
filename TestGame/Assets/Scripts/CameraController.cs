@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour{
     public PlayableCharacter character;
 
     public void Awake(){
+        CharacterManager.controller = this;
         self = this.transform;
         Vector3 upperBounds = Camera.main.ScreenToWorldPoint(new Vector3((float)Screen.width,  (float)Screen.height));
         Vector3 lowerBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0));
@@ -30,15 +31,12 @@ public class CameraController : MonoBehaviour{
     public void Update(){
         if (Input.touchCount < 1)// || !canMove)
             return;        
-        
-        // if(!Input.GetMouseButton(0)) return;
-        // Vector3 tOnePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Touch touchOne = Input.GetTouch(0);
         Vector2 tOnePos = Camera.main.ScreenToWorldPoint(touchOne.position);
 
         if(character == null){
-            character = GridManager.manager.GetCharacter(tOnePos);
+            character = CharacterManager.instance.GetCharacter(tOnePos);
             Debug.Log(character);
             if(character != null)
                 character.GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
@@ -87,7 +85,7 @@ public class CameraController : MonoBehaviour{
 
     //for cut scenes and focusing on characters? too good to remove lol
     public bool MoveTowardsTarget(Vector3 target){
-        if(canMove) return false;
+        canMove = false;
 
         float dist = Vector3.Distance(center, target);
         Debug.Log("Distance from center: " + dist);
@@ -98,7 +96,7 @@ public class CameraController : MonoBehaviour{
             -10f);
         float tOnePosDist = Vector3.Distance(center, target);
         if(dist == tOnePosDist){
-            canMove = false;
+            canMove = true;
             return true;
         }
         return false;

@@ -13,7 +13,6 @@ public class GridManager : MonoBehaviour
     public Transform center;
 
     public static GridManager manager;
-    public List<PlayableCharacter> enemChars, playerChars;
     
     public GridTile[,] board;
 
@@ -27,8 +26,6 @@ public class GridManager : MonoBehaviour
     void InitGrid(){
         Transform tileTrans = prefab.GetComponent<Transform>();
         tileScale = new Vector2(tileTrans.localScale.x, tileTrans.localScale.y);
-        playerChars = new List<PlayableCharacter>();
-        enemChars = new List<PlayableCharacter>();
         if(board == null){
             board = new GridTile[size.x,size.y];
             Quaternion rotation = new Quaternion(0,0,0,0);
@@ -58,7 +55,7 @@ public class GridManager : MonoBehaviour
                 allTiles.Add(board[x-1,y-1]);
             }
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         //print("Randomly ordering tiles...");
         var rng = new System.Random();
@@ -83,8 +80,16 @@ public class GridManager : MonoBehaviour
             lastDelay = delay;
         }
 
+        for(int x = size.x; x > 0 ; x--){
+            for(int y = size.y; y > 0 ; y--){
+                while(board[x-1,y-1].start != false){
+                    yield return null;
+                }
+            }
+        }
+
         //print("Waiting...");
-        yield return new WaitForSeconds(3.7f);
+        //yield return new WaitForSeconds(3.7f);
         //print("Coloring...");
         for(int x = size.x; x > 0 ; x--){
             for(int y = size.y; y > 0 ; y--){
@@ -92,13 +97,33 @@ public class GridManager : MonoBehaviour
                 board[x-1,y-1].startTileColor = true;
             }
         }
+
+        for(int x = size.x; x > 0 ; x--){
+            for(int y = size.y; y > 0 ; y--){
+                while(board[x-1,y-1].startTileColor != false){
+                    yield return null;
+                }
+            }
+        }
+
+        //print("Waiting...");
+        //yield return new WaitForSeconds(3.7f);
+        //print("Coloring...");
+        for(int x = size.x; x > 0 ; x--){
+            for(int y = size.y; y > 0 ; y--){
+                yield return null;
+                board[x-1,y-1].startHighlightColor = true;
+            }
+        }
         // yield return new WaitForSeconds(1.2f);
         // playerChars[0].transform.position = board[0,0].charPosition;
     }
     
     void Awake(){
-        if(manager == null)
+        if(manager == null){
             manager = this;
+            CharacterManager.manager = this;
+        }
         InitGrid();
         CameraController.canMove = true;
     }
@@ -114,19 +139,6 @@ public class GridManager : MonoBehaviour
         return path;
     }
 
-    public PlayableCharacter GetCharacter(Vector3 target){
-        if(playerChars.Count < 1)
-            return null;
-        else if(playerChars.Count == 1)
-            if(Vector3.Distance(target, playerChars[0].position) < 0.2f)
-                return playerChars[0];
-        else for(int x = 0; x < playerChars.Count; x++){
-            if(Vector3.Distance(target, playerChars[x].position) < 0.2f)
-                return playerChars[x];
-        }
-        return null;
-    }
-
     public GridTile GetTile(Vector3 target){
         for(int x = size.x; x > 0 ; x--){
             for(int y = size.y; y > 0 ; y--){
@@ -135,9 +147,5 @@ public class GridManager : MonoBehaviour
             }
         }
         return null;
-    }
-
-    void Update(){
-        
     }
 }

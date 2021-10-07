@@ -17,13 +17,8 @@ public class PlayableCharacter : MonoBehaviour, IComparable<PlayableCharacter>{
     int pathIndex = 0;
     public Color uiColor;
     
-    void Awake()
-    {
-        if(faction == Faction.ai)
-            GridManager.manager.enemChars.Add(this);
-        else{
-            GridManager.manager.playerChars.Add(this);
-        }
+    void Start(){
+        CharacterManager.instance.queue.Push(this);
     }
     public void MoveToPos(Vector3 targetTile){
         currentPath = GridManager.manager.GetPath(transform.position, targetTile);

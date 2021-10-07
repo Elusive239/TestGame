@@ -91,7 +91,7 @@ public class TurnQueue<T> where T : IComparable<T> {
     /// </summary>
     public void NextTurn () {
         T item = items[items.Length - 1];
-        for (int i = items.Length - 1; i > 0; i++) {
+        for (int i = items.Length - 1; i > 0; i--) {
             items[i] = items[i - 1];
         }
         items[0] = item;

@@ -12,11 +12,11 @@ public class GridTile : MonoBehaviour
     public bool isWalkable = true;
     public GameObject currentOccupier;
     public SpriteRenderer border, top, bottom;
+    public AnimationCurve curve;
     
     
     float startMove;
-    bool start = false;
-    public bool startHighlightColor = false, startTileColor = false;
+    public bool start = false, startHighlightColor = false, startTileColor = false;
 
     public void InitTile(Vector2 _coordinates, Vector3 _target){
         coordinates = _coordinates;
@@ -58,31 +58,27 @@ public class GridTile : MonoBehaviour
         if(!start){
 
             if(startTileColor){
-                if(!SameTileColor(GridManager.manager.topColor, GridManager.manager.bottomColor)){
+                if(!SameTileColor(GridManager.manager.topColor, GridManager.manager.bottomColor))
                     IncTileColor(GridManager.manager.topColor, GridManager.manager.bottomColor);
-                }else{
-                startHighlightColor = true;
-                startTileColor = false;
-                }
+                else
+                    startTileColor = false;
             }
 
 
             if(!startHighlightColor ) return;
 
-            if(!SameBorderColor(GridManager.manager.border)){
+            if(!SameBorderColor(GridManager.manager.border))
                 IncBorderColor(GridManager.manager.border);
-            }else{
+            else
                 startHighlightColor = false;
-                Color temp = new Color(border.color.r, border.color.g, border.color.b, 0);
-                border.color = temp;
-            }
+            
         }
 
         if(Time.time <= startMove)
             return;
 
-        transform.position = Vector3.MoveTowards(position, target, 9.9f * Time.deltaTime);
-        if(Vector3.Distance(position, target) < 0.001f){
+        transform.position = Vector3.MoveTowards(position, target, curve.Evaluate((position.y/target.y)) * 9.9f * Time.deltaTime);
+        if(Vector3.Distance(position, target) < 0.0001f){
             transform.position = target;
             start = false;
         }
