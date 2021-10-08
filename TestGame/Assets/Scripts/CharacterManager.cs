@@ -16,8 +16,9 @@ public class CharacterManager : MonoBehaviour
     public PlayableCharacter currentCharacter;
 
     public List<GameObject> imgs;
-    public Transform actionGrid, confirmButtons;
+    public Transform actionGrid, confirmButtons, canvas;
     Transform[] actions, confirms; 
+
     public UIState uIState;
     public float shiftAmount;
     private Vector3 maxScale, hidingScale;
@@ -30,8 +31,13 @@ public class CharacterManager : MonoBehaviour
         maxScale = new Vector3(1, 1, 1);
         hidingScale = new Vector3(0,0,1);
         actions = actionGrid.GetComponentsInChildren<Transform>();
+        foreach(Transform t in actions){
+            t.SetParent(canvas);
+        }
         confirms = confirmButtons.GetComponentsInChildren<Transform>();
-        //UIStateChange(0);
+        foreach(Transform t in confirms){
+            t.SetParent(canvas);
+        }
     }
 
     public void SwapUIColors(){
@@ -46,56 +52,39 @@ public class CharacterManager : MonoBehaviour
     bool UIStateShift(UIState uIState, float timeShift){
         Vector3 shift = new Vector3(shiftAmount*timeShift, shiftAmount*timeShift, 0);
         float actionDist = 0, confirDist = 0;
+        Vector3 confirmShift = shift, actionShift = shift, cScale = maxScale, aScale = maxScale;
+
         switch(uIState){
             case UIState.actions:
-            foreach(Transform t in confirms){
-                t.localScale = Clamp(t.localScale - shift, hidingScale, maxScale);
-            }
-
-            foreach(Transform t in actions){
-                t.localScale = Clamp(t.localScale + shift, hidingScale, maxScale);
-            }
-            
-            actionDist = Vector3.Distance(actions[0].localScale, maxScale);
-            confirDist = Vector3.Distance(confirms[0].localScale, hidingScale);
-            if(actionDist == 0 && confirDist == 0) return true;
-            return false;
-
+                confirmShift = -confirmShift;
+                cScale = hidingScale;
+                break;
             case UIState.confirmation:
-            foreach(Transform t in confirms){
-                t.localScale = Clamp(t.localScale + shift, hidingScale, maxScale);
-            }
-
-            foreach(Transform t in actions){
-                t.localScale = Clamp(t.localScale - shift, hidingScale, maxScale);
-            }
-            
-            actionDist = Vector3.Distance(actions[0].localScale, hidingScale);
-            confirDist = Vector3.Distance(confirms[0].localScale, maxScale);
-            if(actionDist == 0 && confirDist == 0) return true;
-            break;
-
+                actionShift = -actionShift;
+                aScale = hidingScale;
+                break;
             case UIState.enemyTurn:
-            confirmButtons.localScale = hidingScale;
-            actionGrid.localScale = hidingScale;
-            break;
-
             case UIState.hidden:
             default:
-            foreach(Transform t in confirms){
-                t.localScale = Clamp(t.localScale - shift, hidingScale, maxScale);
-            }
-
-            foreach(Transform t in actions){
-                t.localScale = Clamp(t.localScale - shift, hidingScale, maxScale);
-            }
-            
-            actionDist = Vector3.Distance(actions[0].localScale, hidingScale);
-            confirDist = Vector3.Distance(confirms[0].localScale, hidingScale);
-            if(actionDist == 0 && confirDist == 0) return true;
-            return true;
+                confirmShift = -confirmShift;
+                actionShift = -actionShift;
+                cScale = hidingScale;
+                aScale = hidingScale;
+            break;
         }
-        return false;
+
+        foreach(Transform t in confirms){
+            t.localScale = Clamp(t.localScale + confirmShift, hidingScale, maxScale);
+        }
+
+        foreach(Transform t in actions){
+            t.localScale = Clamp(t.localScale + actionShift, hidingScale, maxScale);
+        }
+            
+        actionDist = Vector3.Distance(actions[0].localScale, aScale);
+        confirDist = Vector3.Distance(confirms[0].localScale, cScale);
+        if(actionDist == 0 && confirDist == 0) return true;
+        else return false;
     }
 
     public PlayableCharacter GetCharacter(Vector3 target){
@@ -110,6 +99,10 @@ public class CharacterManager : MonoBehaviour
         }
         return null;
     }
+
+    public void TestHidden() => uIState = UIState.hidden;
+    public void TestAction() => uIState = UIState.actions;
+    public void TestConfirm() => uIState = UIState.confirmation;
 
     // Update is called once per frame
     void FixedUpdate(){
@@ -127,7 +120,5 @@ public class CharacterManager : MonoBehaviour
 
         if(stopCamera)
             stopCamera = !controller.MoveTowardsTarget(currentCharacter.position);
-
-
     }
 }
